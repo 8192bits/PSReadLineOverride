@@ -1,8 +1,8 @@
-Archive of PSReadline 2.4.5
+If Install-Module fails or is unavailable, you can install PSReadLine manually.
+Extract the Modules and Scripts folders from the PSReadLine-2.4.5 archive included in this repo.
 
+PowerShell 5.1
+    C:\Users\<USERNAME>\Documents\WindowsPowerShell\
 
-PS 5.1
-Extract Modules and Scripts folder on c:\Users\<USERNAME>\Documents\WindowsPowerShell\
-
-PS 7.x
-Extract Modules and Scripts folder on c:\Users\<USERNAME>\Documents\PowerShell\
+PowerShell 7.x
+    C:\Users\<USERNAME>\Documents\PowerShell\
