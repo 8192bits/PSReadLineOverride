@@ -127,7 +127,7 @@ FOR POWERSHELL 7 :
 Same step
 Copy the content from :
     
-        PSReadLineOverride/profile/7x/Microsoft.PowerShell_profile.ps1
+    PSReadLineOverride/profile/7x/Microsoft.PowerShell_profile.ps1
 
 
 STEP 5 - Cursor setting
