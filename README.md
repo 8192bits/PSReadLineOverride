@@ -10,6 +10,7 @@ By default, conhost resets the cursor shape after every command and PSReadLine
 does not re-emit the ANSI cursor sequence after each render. This patch fixes
 that by modifying the ReallyRender() method in the PSReadLine DLL directly.
 
+![demo](assets/Demo.PSReadLine2.4.5.gif)
 ---
 
 CURSOR SHAPES AVAILABLE
