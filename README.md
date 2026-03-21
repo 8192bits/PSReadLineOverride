@@ -39,7 +39,7 @@ INSTALLATION
 STEP 1 - Enable Virtual Terminal (VT) in the registry
 ------------------------------------------------------
 
-Run the .reg file from the registry/ folder :
+Run ALL three .reg file from the registry/ folder :
 
     console_PSVT.reg    for all console
     x64_PSVT.reg        for 64-bit Windows
@@ -48,7 +48,7 @@ Run the .reg file from the registry/ folder :
 Double-click the file and confirm when prompted.
 Then CLOSE and REOPEN your PowerShell window completely.
 
-If you prefer to run it manually from PowerShell :
+If you prefer to run it manually from PowerShell, not cmd :
 
     reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
     reg add "HKCU\Console\%%SystemRoot%%_System32_WindowsPowerShell_v1.0_powershell.exe" /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
