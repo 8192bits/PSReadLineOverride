@@ -45,6 +45,7 @@ STEP 2 - Install PSReadLine 2.4.5
 Open PowerShell and run :
 
     Install-Module PSReadLine -RequiredVersion 2.4.5 -Force -SkipPublisherCheck -AllowClobber -Scope CurrentUser
+If the Nuget provider is required, accept with y
     
 Or else extract the Modules folder on PSReadLineOverride\PSReadLine-2.4.5\Modules  
 into C:\Users\<YourName>\Documents\WindowsPowerShell\  
