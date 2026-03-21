@@ -24,14 +24,6 @@ The dll/ folder contains one patched DLL per cursor shape :
     - UnderscoreBlink   Underscore cursor, blinking
     - VerticalBar       Bar cursor, steady
     - VerticalBarBlink  Bar cursor, blinking (recommended)
-
-
-REQUIREMENTS
-------------
-    - Windows PowerShell 5.1 or PowerShell 7+
-    - conhost (legacy console)
-    - PSReadLine 2.4.5
-
 ---
 INSTALLATION
 ------------
@@ -39,21 +31,13 @@ INSTALLATION
 STEP 1 - Enable Virtual Terminal (VT) in the registry
 ------------------------------------------------------
 
-Run ALL three .reg file from the registry/ folder :
+Run the .reg file from the registry/ folder :
 
-    console_PSVT.reg    for all console
-    x64_PSVT.reg        for 64-bit Windows
-    x86_PSVT.reg        for 32-bit Windows
+    console_PSVT.reg
 
-Double-click the file and confirm when prompted.
-Then CLOSE and REOPEN your PowerShell window completely.
-
-If you prefer to run it manually from PowerShell, not cmd :
+If you prefer to run it manually from Administrator PowerShell or cmd :
 
     reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
-    reg add "HKCU\Console\%%SystemRoot%%_System32_WindowsPowerShell_v1.0_powershell.exe" /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
-    reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
-
 
 
 STEP 2 - Install PSReadLine 2.4.5
@@ -61,14 +45,16 @@ STEP 2 - Install PSReadLine 2.4.5
 
 Open PowerShell and run :
 
-    Install-Module PSReadLine -Force -SkipPublisherCheck -Scope CurrentUser
+    Install-Module PSReadLine -RequiredVersion 2.4.5 -Force -SkipPublisherCheck -AllowClobber -Scope CurrentUser
+    
+    Or else extract the Modules folder on PSReadLineOverride\PSReadLine-2.4.5\Modules into C:\Users\<YourName>\Documents\WindowsPowerShell\  
+    (create the folder WindowsPowerShell if not exist.)
 
 Verify the installation :
 
     Get-Module PSReadLine -ListAvailable | Select-Object Version, Path
 
 You should see version 2.4.5 in your user modules folder.
-
 
 
 STEP 3 - Copy the patched DLL
@@ -79,15 +65,20 @@ Choose your cursor shape from the dll/ folder and copy it.
 FOR POWERSHELL 5.1 :
 
     Copy the chosen DLL and rename it to :
-    Microsoft.PowerShell.PSReadLine.dll
-
+        Microsoft.PowerShell.PSReadLine.dll
+ 
     Paste it into :
-    C:\Users\<YourName>\Documents\WindowsPowerShell\Modules\PSReadLine\2.4.5\
+        C:\Users\<YourName>\Documents\WindowsPowerShell\Modules\PSReadLine\2.4.5\
+    (Replace the original or archive it)
 
+    In PowerShell type 
+        Unblock-File "$HOME\Documents\WindowsPowerShell\Modules\PSReadLine\2.4.5\Microsoft.PowerShell.PSReadLine.dll"
+    (to allow the execution of the dll)
+    
 FOR POWERSHELL 7 :
 
-    Same DLL, paste it into :
-    C:\Users\<YourName>\Documents\PowerShell\Modules\PSReadLine\2.4.5\
+    Same step and Same DLL, paste it into :
+        C:\Users\<YourName>\Documents\PowerShell\Modules\PSReadLine\2.4.5\
 
     Note : Make sure PSReadLine 2.4.5 is installed (Step 2) before copying.
 
@@ -96,8 +87,12 @@ FOR POWERSHELL 7 :
 STEP 4 - Set up your PowerShell profile
 ---------------------------------------
 
-FOR POWERSHELL 5.1 :
+FOR POWERSHELL 5.1 :  
 
+    Allow the execution of .ps1 script  
+        Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+        (type A for Yes to ALL)
+    
     Test if you have $PROFILE
         Test-Path $PROFILE
 
@@ -108,60 +103,27 @@ FOR POWERSHELL 5.1 :
         notepad $PROFILE
 
     Copy the content from:
-        profile/51/Microsoft.PowerShell_profile.ps1
-
-    --
-    At the beginning of the $PROFILE file, there is a command that runs:
-    
-    Clear-Host 
-    Write-Host "Windows PowerShell"
-    Write-Host "Copyright (C) Microsoft Corporation. All rights reserved."
-    Write-Host ""
-
-    This removes the "Try the new cross-platform PowerShell" message.
-    (when you launch Powershell you can see 200ms lag but is nothing you can delete the 4 lines if you want)
+        PSReadLineOverride/profile/51/Microsoft.PowerShell_profile.ps1
 
 FOR POWERSHELL 7 :
 
-    Test if you have $PROFILE
-        Test-Path $PROFILE
-
-    if return false type
-        New-Item -Type File -Path $PROFILE -Force
-        
-    Open your profile :
-        notepad $PROFILE
-
+    Same step
+    
     Copy the content from :
-        profile/7x/Microsoft.PowerShell_profile.ps1
-
-    Note : The Import-Module line is required to force PSReadLine 2.4.5 (patched)
-           instead of the default 2.3.6 bundled with PowerShell 7.
-           Make sure the path matches your actual install location.
+        PSReadLineOverride/profile/7x/Microsoft.PowerShell_profile.ps1
 
 
-
-STEP 5 - Recommended conhost cursor setting
+STEP 5 - Cursor setting
 --------------------------------------------
 
+    Close all open PowerShell windows and open a new one.
+    
     In the Properties of your PowerShell shortcut (right-click title bar -> Properties)
     go to Options tab and set the cursor shape to match your chosen DLL.
 
-    This avoids any visual conflict between the Win32 cursor and the ANSI cursor.
+    Now your cursor shape is permanent; if you wish to change it, go to the step 3 and replace the .dll only.
 
 ---
-
-VERIFICATION
-------------
-
-After restarting PowerShell, you should have :
-
-    Cursor shape    Persistent custom cursor that stays after every command
-    Colors          Syntax highlighting with custom colors
-    Autocomplete    Tab completion working normally
-    Ctrl+R          History search working normally
-    InlinePrediction Inline gray suggestions while typing
-
 
 RESTORING THE ORIGINAL DLL
 ---------------------------
@@ -174,7 +136,7 @@ If something goes wrong, restore the original DLL :
 
 Or reinstall PSReadLine completely :
 
-    Install-Module PSReadLine -Force -SkipPublisherCheck -Scope CurrentUser
+    Install-Module PSReadLine -RequiredVersion 2.4.5 -Force -SkipPublisherCheck -AllowClobber -Scope CurrentUser
 
 
 HOW THE PATCH WORKS
@@ -205,15 +167,6 @@ Why does this happen in conhost but not Windows Terminal ?
     PSReadLine falls back to LegacyWin32Console mode which filters out
     ANSI sequences and uses Win32 Console.CursorSize API instead.
     This API gets reset by Windows after every command execution.
-
-Why not just use Set-PSReadLineOption -CursorShape ?
-
-    This option does not exist in the official PSReadLine release.
-    It would require recompiling PSReadLine from source with additional
-    code changes across 3 files (Cmdlets.cs, Options.cs, Render.cs).
-    The DLL patch is simpler, portable, and does not require a build chain,
-    and I don't have time for that.
-
 
 LICENSE
 -------
