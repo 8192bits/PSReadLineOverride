@@ -40,12 +40,12 @@ Or run the .reg file from the registry/ folder :
 
 STEP 2 - Install PSReadLine 2.4.5
 ----------------------------------
-In PowerShell and run :
+Run :
 
     Install-Module PSReadLine -RequiredVersion 2.4.5 -Force -SkipPublisherCheck -AllowClobber -Scope CurrentUser
 If the Nuget provider is required, accept with y
     
-Or extract psreadline.2.4.5.zip in:  
+Or extract psreadline.2.4.5.zip go in PSReadLineOverride and run :  
     
     Expand-Archive "psreadline.2.4.5.zip" -DestinationPath "$HOME\Documents\WindowsPowerShell\Modules\PSReadLine\2.4.5" -Force
 
