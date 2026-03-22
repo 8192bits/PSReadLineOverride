@@ -32,7 +32,7 @@ Windows 10 comes with PSReadLine2.0.0; if you choose this option, go to PSReadLi
 
 You can also update it to PSReadline 2.4.5; if you choose this option, go to PSReadLine 2.4.5 step  
 
-!! Powershell 7.x work only with 2.4.5, it does not come with 2.0.0 by default. !!
+Note: Powershell 7.x work only with 2.4.5, it does not come with 2.0.0 by default.
 
 Open a single administrator PowerShell window and keep it open through all steps until the Cursor setting step.
 
